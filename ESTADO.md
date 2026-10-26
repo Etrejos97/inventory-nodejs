@@ -1,6 +1,6 @@
 # Estado activo
 
-**Última actualización**: 2026-09-02.
+**Última actualización**: 2026-10-26.
 
 ## Qué hice
 
@@ -21,7 +21,7 @@ Indexé el repo con `codebase-memory-mcp` (565 nodos / 1146 aristas) y dejé
 la regla de usarlo para mapear y revisar archivos en `CLAUDE.md`.
 
 Hice el primer commit y publiqué el repo en GitHub, público, bajo mi
-cuenta personal: [github.com/Etrejos97/inventory-node](https://github.com/Etrejos97/inventory-node).
+cuenta personal: [github.com/Etrejos97/inventory-nodejs](https://github.com/Etrejos97/inventory-nodejs).
 Antes de ese commit revisé `.gitignore` para que `node_modules/`, `.next/`,
 `prisma/dev.db` y `.env` quedaran fuera del repo (`.env.example` sí queda,
 como plantilla). También completé el `README.md` (stack, estructura, tabla
@@ -83,12 +83,25 @@ confirmación) — todos los íconos se ven del tamaño y color correctos,
 heredando `currentColor` de las variables `--neon-*` ya existentes sin
 tocar esas reglas de CSS.
 
+Armé la automatización E2E de la materia de Testing en `e2e/`, con Cypress
+16.1: tres casos (`TC-AUTO-01` en `/login`, `TC-AUTO-02` en `/inventario`,
+`TC-AUTO-03` en `/`) de 15 a 17 pasos cada uno. Para que cada pantalla tuviera
+su propia URL y su título agregué `react-router-dom` al frontend (ADR
+`docs/decisiones/2026-10-26 — Rutas con react-router y título por ruta.md`).
+Los tres casos pasan contra el backend Node.js y dejan la base con los 15
+elementos del seed. En el camino aparecieron dos defectos del frontend que
+corregí: el guard de logout mandaba a `/login` en vez de `/`, y la búsqueda de
+`ItemList` podía quedarse con la respuesta de una letra anterior (condición de
+carrera, ahora descarta respuestas de filtros viejos). Los casos están en
+`e2e/testrail/casos.js`; `npm run testrail:generar` produce el XML y el CSV
+para importarlos a TestRail. La salida de la corrida está en
+`e2e/evidencia/`.
+
 ## Próximos pasos
 
-1. Testing: lo dejo en pausa hasta que el profesor indique el enfoque a
-   seguir. Cuando arranque: instalar el framework que corresponda,
-   actualizar `docs/CONSTITUTION.md` §6 y `docs/DEUDA.md` (la sección "Sin
-   tests, sin CI" queda obsoleta ahí).
+1. Testing: repetir los casos de Cypress contra el backend Java de
+   `inventory-fullstack` cuando se corrijan BUG-001, BUG-002 y BUG-003
+   (versión 2.4 del PPI), y probar en Chrome y Firefox (hoy solo Electron).
 2. Si en algún momento quiero correr frontend+backend juntos con Docker o
    desplegarlos, revisar `docs/decisiones/` antes de tocar la capa de
    datos (Prisma+SQLite) o el manejo de errores (404 real, shape propio).
@@ -104,10 +117,11 @@ Ninguno.
 ## Decisiones tomadas en esta sesión (fuera del plan original aprobado)
 
 - **Duplicar el frontend**, no solo re-apuntar su proxy — pedido explícito.
-- **Sin tests, sin CI en esta vuelta** — pedido explícito, el proyecto es
-  la base para practicar testing después. Por eso `scripts/smoke-test.mjs`
-  y `.github/workflows/backend-smoke.yml` del plan original quedaron
-  fuera, igual que el hook `run_related_tests.py`.
+- **Sin tests ni CI en la primera vuelta**, porque el proyecto era la base
+  para practicar testing. Por eso `scripts/smoke-test.mjs` y
+  `.github/workflows/backend-smoke.yml` del plan original quedaron fuera,
+  igual que el hook `run_related_tests.py`. El 2026-10-26 sumé solo los
+  casos E2E de Cypress en `e2e/`; sigue sin haber CI.
 - **Carpeta raíz renombrada** de `inventory-backend-node` a `inventory-node`
   (con `backend/` y `frontend/` adentro), porque el alcance dejó de ser
   "solo backend".
@@ -125,5 +139,5 @@ Ninguno.
 
 ## Estado git
 
-Repo con remoto en GitHub (`origin` → `github.com/Etrejos97/inventory-node`,
+Repo con remoto en GitHub (`origin` → `github.com/Etrejos97/inventory-nodejs`,
 público), rama `main`.

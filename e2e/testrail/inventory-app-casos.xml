@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sections>
+  <section>
+    <name>Pruebas automatizadas E2E (Cypress)</name>
+    <description>Casos automatizados con Cypress. Código en la carpeta e2e del repositorio.</description>
+    <cases>
+      <case>
+        <title>TC-AUTO-01 · Autenticación en /login</title>
+        <template>Test Case (Steps)</template>
+        <references>RF-07, CU-06</references>
+        <custom>
+          <preconds>Backend en http://localhost:8080 y frontend en http://localhost:5173 en ejecución, con la base sembrada (15 elementos, usuario admin / admin123 activo con rol Administrador). Sin sesión iniciada.</preconds>
+          <steps_separated>
+            <step>
+              <index>1</index>
+              <content>Abrir http://localhost:5173/login.</content>
+              <expected>Se muestra la pantalla de inicio de sesión.</expected>
+            </step>
+            <step>
+              <index>2</index>
+              <content>Validar el título de la pestaña.</content>
+              <expected>El título es &quot;Inventory - Iniciar sesión&quot;.</expected>
+            </step>
+            <step>
+              <index>3</index>
+              <content>Validar la URL de la página.</content>
+              <expected>La URL es http://localhost:5173/login.</expected>
+            </step>
+            <step>
+              <index>4</index>
+              <content>Verificar los elementos presentes de la pantalla.</content>
+              <expected>Se ven el logo, el título, el subtítulo, el campo Usuario (placeholder &quot;Nombre de usuario&quot;), el campo Contraseña (placeholder &quot;••••••••&quot;), el botón para mostrar la contraseña, el botón &quot;Iniciar sesión&quot; y el botón &quot;Volver al inicio&quot;. No hay mensaje de error.</expected>
+            </step>
+            <step>
+              <index>5</index>
+              <content>Validar los textos de la pantalla.</content>
+              <expected>El título dice &quot;Inventory&quot;, el subtítulo &quot;Inicia sesión para administrar&quot;, las etiquetas &quot;Usuario&quot; y &quot;Contraseña&quot; y el botón &quot;Iniciar sesión&quot;.</expected>
+            </step>
+            <step>
+              <index>6</index>
+              <content>Validar los estilos CSS.</content>
+              <expected>La fuente del body es Inter y su fondo es rgb(10, 14, 23). La tarjeta tiene fondo rgb(17, 24, 39). El título tiene color rgb(241, 245, 249) y peso 700. El botón tiene color rgb(10, 14, 23), borde redondeado de 10px y fondo con degradado lineal.</expected>
+            </step>
+            <step>
+              <index>7</index>
+              <content>Presionar &quot;Iniciar sesión&quot; con el formulario vacío.</content>
+              <expected>El navegador marca el usuario como obligatorio, no se llama a la API y la URL sigue en /login.</expected>
+            </step>
+            <step>
+              <index>8</index>
+              <content>Escribir el usuario &quot;admin&quot; y la contraseña &quot;incorrecta123&quot;. Presionar el botón del ojo y presionarlo otra vez.</content>
+              <expected>La contraseña se muestra en texto y luego vuelve a ocultarse.</expected>
+            </step>
+            <step>
+              <index>9</index>
+              <content>Presionar &quot;Iniciar sesión&quot;.</content>
+              <expected>La API responde 401 y se muestra &quot;Credenciales inválidas&quot; en color rgb(255, 45, 85). La URL sigue en /login.</expected>
+            </step>
+            <step>
+              <index>10</index>
+              <content>Borrar la contraseña, escribir &quot;admin123&quot; y presionar &quot;Iniciar sesión&quot;.</content>
+              <expected>Se envía el formulario con las credenciales válidas.</expected>
+            </step>
+            <step>
+              <index>11</index>
+              <content>Validar la respuesta de la API.</content>
+              <expected>La API responde 200 con username &quot;admin&quot;, role &quot;Administrador&quot; e isActive true.</expected>
+            </step>
+            <step>
+              <index>12</index>
+              <content>Validar la URL de la página.</content>
+              <expected>La URL es http://localhost:5173/inventario.</expected>
+            </step>
+            <step>
+              <index>13</index>
+              <content>Validar el título de la pestaña.</content>
+              <expected>El título es &quot;Inventory - Inventario&quot;.</expected>
+            </step>
+            <step>
+              <index>14</index>
+              <content>Validar la barra superior.</content>
+              <expected>Se ven el nombre &quot;Administrador&quot; y el botón &quot;Salir&quot;. No aparece &quot;Ingresar&quot;. El localStorage guarda el usuario con rol Administrador.</expected>
+            </step>
+            <step>
+              <index>15</index>
+              <content>Presionar &quot;Salir&quot;.</content>
+              <expected>La URL es http://localhost:5173/, el título es &quot;Inventory - Gestor de Inventario&quot;, aparece el botón &quot;Ingresar&quot; y se borra la sesión del localStorage.</expected>
+            </step>
+          </steps_separated>
+        </custom>
+      </case>
+      <case>
+        <title>TC-AUTO-02 · Registro y consulta en /inventario</title>
+        <template>Test Case (Steps)</template>
+        <references>RF-01, RF-02, CU-01, CU-02</references>
+        <custom>
+          <preconds>Backend en http://localhost:8080 y frontend en http://localhost:5173 en ejecución, con la base sembrada (15 elementos, usuario admin / admin123 activo con rol Administrador). No existe ningún elemento con el número de serie LG-UG27-QHD-014.</preconds>
+          <steps_separated>
+            <step>
+              <index>1</index>
+              <content>Iniciar sesión como Administrador y abrir http://localhost:5173/inventario.</content>
+              <expected>Se muestra la pantalla de inventario.</expected>
+            </step>
+            <step>
+              <index>2</index>
+              <content>Validar el título de la pestaña.</content>
+              <expected>El título es &quot;Inventory - Inventario&quot;.</expected>
+            </step>
+            <step>
+              <index>3</index>
+              <content>Validar la URL de la página.</content>
+              <expected>La URL es http://localhost:5173/inventario.</expected>
+            </step>
+            <step>
+              <index>4</index>
+              <content>Verificar los elementos presentes de la pantalla.</content>
+              <expected>Se ven los botones &quot;Inventario&quot;, &quot;Admin&quot; y &quot;Salir&quot;, el título &quot;Inventario&quot;, el botón &quot;+ Nuevo elemento&quot;, el cuadro &quot;Buscar…&quot;, dos listas desplegables, 4 tarjetas resumen y una tabla de 7 columnas.</expected>
+            </step>
+            <step>
+              <index>5</index>
+              <content>Validar los textos.</content>
+              <expected>Las tarjetas dicen Productos, Stock total, Stock bajo y Sin stock. Los encabezados son Producto, Categoría, Estado, Stock, Stock mín., Valor y Acciones. La tabla tiene 15 filas y la tarjeta Productos muestra 15.</expected>
+            </step>
+            <step>
+              <index>6</index>
+              <content>Validar los estilos CSS.</content>
+              <expected>El botón &quot;Inventario&quot; está activo con color rgb(0, 240, 255). &quot;+ Nuevo elemento&quot; tiene color rgb(10, 14, 23), peso 600 y fondo con degradado. Los encabezados tienen color rgb(100, 116, 139) y mayúsculas. El valor de las tarjetas mide 28px, peso 700 y color rgb(241, 245, 249).</expected>
+            </step>
+            <step>
+              <index>7</index>
+              <content>Abrir las listas desplegables de categoría y de estado.</content>
+              <expected>Categoría: Todas las categorías, Hardware, Software, Licencias, Redes, Consumibles, Gaming y Audio y Video. Estado: Todos los estados, Disponible, En uso, En mantenimiento y Dado de baja.</expected>
+            </step>
+            <step>
+              <index>8</index>
+              <content>Seleccionar la categoría Hardware.</content>
+              <expected>La tabla queda con 6 filas y todas tienen la categoría Hardware.</expected>
+            </step>
+            <step>
+              <index>9</index>
+              <content>Seleccionar además el estado Disponible.</content>
+              <expected>Los filtros se combinan: quedan 3 filas y todas tienen el estado Disponible.</expected>
+            </step>
+            <step>
+              <index>10</index>
+              <content>Volver a &quot;Todas las categorías&quot; y &quot;Todos los estados&quot;. Escribir &quot;laptop&quot; en el cuadro de búsqueda, borrarlo y escribir &quot;LAPTOP&quot;.</content>
+              <expected>Vuelven las 15 filas. Con &quot;laptop&quot; y con &quot;LAPTOP&quot; quedan las mismas 2 filas, cuyo nombre contiene &quot;Laptop&quot;.</expected>
+            </step>
+            <step>
+              <index>11</index>
+              <content>Escribir &quot;zzz-no-existe&quot; en el cuadro de búsqueda y luego borrarlo.</content>
+              <expected>La tabla muestra &quot;No hay elementos registrados&quot; y, al borrar el texto, vuelven las 15 filas.</expected>
+            </step>
+            <step>
+              <index>12</index>
+              <content>Presionar &quot;+ Nuevo elemento&quot;.</content>
+              <expected>Se abre el formulario &quot;Nuevo elemento&quot; con los campos nombre, categoría (Seleccionar… más las 7 categorías), estado (4 opciones), número de serie, fecha de adquisición, ubicación, valor, stock, stock mínimo, descripción y los botones Cancelar y Crear.</expected>
+            </step>
+            <step>
+              <index>13</index>
+              <content>Presionar &quot;Crear&quot; sin llenar ningún campo.</content>
+              <expected>El navegador marca el nombre y la categoría como obligatorios, no se llama a la API y el formulario sigue abierto.</expected>
+            </step>
+            <step>
+              <index>14</index>
+              <content>Llenar el formulario con nombre Monitor LG UltraGear 27&quot; QHD, categoría Hardware, estado Disponible, número de serie TPLINK-AX73-001 (ya registrado), fecha 2026-08-20, ubicación Bodega A - E5, valor 1290000, stock 6, stock mínimo 2 y descripción 27&quot; QHD 165Hz, panel IPS, HDR10. Presionar &quot;Crear&quot;.</content>
+              <expected>La API responde 409 y el formulario muestra &quot;Ya existe un ítem con número de serie: TPLINK-AX73-001&quot;. El formulario sigue abierto.</expected>
+            </step>
+            <step>
+              <index>15</index>
+              <content>Cambiar el número de serie por LG-UG27-QHD-014 y presionar &quot;Crear&quot;.</content>
+              <expected>La API responde 201 con el elemento creado y el formulario se cierra.</expected>
+            </step>
+            <step>
+              <index>16</index>
+              <content>Buscar LG-UG27-QHD-014 en el cuadro de búsqueda.</content>
+              <expected>Queda una fila con Monitor LG UltraGear 27&quot; QHD, categoría Hardware, estado Disponible, stock 6, stock mínimo 2 y valor $1.290.000. La tarjeta Productos muestra 1.</expected>
+            </step>
+            <step>
+              <index>17</index>
+              <content>Presionar el ícono de eliminar de esa fila y aceptar la confirmación ¿Eliminar &quot;Monitor LG UltraGear 27&quot; QHD&quot;?.</content>
+              <expected>El elemento desaparece, la lista vuelve a las 15 filas del seed y la tarjeta Productos muestra 15.</expected>
+            </step>
+          </steps_separated>
+        </custom>
+      </case>
+      <case>
+        <title>TC-AUTO-03 · Catálogo público en /</title>
+        <template>Test Case (Steps)</template>
+        <references>RF-02</references>
+        <custom>
+          <preconds>Backend en http://localhost:8080 y frontend en http://localhost:5173 en ejecución, con la base sembrada (15 elementos, usuario admin / admin123 activo con rol Administrador). Sin sesión iniciada y carrito vacío. Cobertura adicional de RF-02: consulta pública del inventario por categoría.</preconds>
+          <steps_separated>
+            <step>
+              <index>1</index>
+              <content>Abrir http://localhost:5173/ sin sesión iniciada.</content>
+              <expected>Se muestra la página pública con el catálogo.</expected>
+            </step>
+            <step>
+              <index>2</index>
+              <content>Validar el título de la pestaña.</content>
+              <expected>El título es &quot;Inventory - Gestor de Inventario&quot;.</expected>
+            </step>
+            <step>
+              <index>3</index>
+              <content>Validar la URL de la página.</content>
+              <expected>La URL es http://localhost:5173/.</expected>
+            </step>
+            <step>
+              <index>4</index>
+              <content>Verificar los elementos presentes de la pantalla.</content>
+              <expected>Se ven el logo INVENTORY, los botones &quot;Inicio&quot;, &quot;Ingresar&quot; y el carrito, la insignia, el título y el botón &quot;Gaming&quot; del encabezado, el enlace &quot;Ver productos&quot;, las pestañas de categoría y la cuadrícula de productos.</expected>
+            </step>
+            <step>
+              <index>5</index>
+              <content>Validar los textos del encabezado.</content>
+              <expected>Se leen &quot;INVENTORY&quot;, &quot;Ofertas exclusivas&quot;, &quot;Tecnología que impulsa tu mundo&quot;, &quot;Descubre los mejores equipos&quot; y los beneficios Envío nacional, Pago seguro, Soporte 24/7 y Garantía incluida.</expected>
+            </step>
+            <step>
+              <index>6</index>
+              <content>Validar los estilos CSS.</content>
+              <expected>El logo tiene peso 800 y cursor pointer. &quot;Inicio&quot; está activo con color rgb(0, 240, 255). El título principal mide 44px con peso 900. El subtítulo tiene color rgb(148, 163, 184) y 16.8px. La pestaña &quot;Todos&quot; está activa con color rgb(10, 14, 23) y borde redondeado de 999px.</expected>
+            </step>
+            <step>
+              <index>7</index>
+              <content>Revisar las pestañas de categoría y la cantidad de productos.</content>
+              <expected>Las pestañas son Todos, Hardware, Software, Licencias, Redes, Consumibles, Gaming y Audio y Video. Se muestran 15 tarjetas de producto.</expected>
+            </step>
+            <step>
+              <index>8</index>
+              <content>Revisar la imagen de cada producto.</content>
+              <expected>Hay 15 imágenes y cada una tiene como texto alternativo el nombre de su producto.</expected>
+            </step>
+            <step>
+              <index>9</index>
+              <content>Presionar la pestaña &quot;Software&quot;.</content>
+              <expected>La pestaña queda activa, no hay tarjetas y se muestra &quot;No hay productos en esta categoría&quot;.</expected>
+            </step>
+            <step>
+              <index>10</index>
+              <content>Presionar la pestaña &quot;Redes&quot;.</content>
+              <expected>Queda una tarjeta: Router TP-Link Archer AX73, categoría Redes, precio $299.900, &quot;10 en stock&quot; y el botón &quot;Agregar al carrito&quot; habilitado.</expected>
+            </step>
+            <step>
+              <index>11</index>
+              <content>Presionar &quot;Agregar al carrito&quot;.</content>
+              <expected>El contador del carrito en la barra superior pasa a 1.</expected>
+            </step>
+            <step>
+              <index>12</index>
+              <content>Presionar el botón del carrito.</content>
+              <expected>Se abre el panel &quot;Carrito (1)&quot; con Router TP-Link Archer AX73, cantidad 1 y total $299.900.</expected>
+            </step>
+            <step>
+              <index>13</index>
+              <content>Presionar el botón + de la cantidad.</content>
+              <expected>La cantidad pasa a 2, el total a $599.800 y el título a &quot;Carrito (2)&quot;.</expected>
+            </step>
+            <step>
+              <index>14</index>
+              <content>Presionar &quot;Solicitar cotización&quot;.</content>
+              <expected>Se abre &quot;Resumen de cotización&quot; con &quot;Router TP-Link Archer AX73 × 2&quot; y $599.800.</expected>
+            </step>
+            <step>
+              <index>15</index>
+              <content>Presionar &quot;Confirmar cotización&quot;.</content>
+              <expected>Se muestra &quot;¡Cotización solicitada!&quot; en color rgb(34, 214, 94) y &quot;Te contactaremos pronto con los detalles.&quot;. El panel se cierra solo y el carrito queda vacío.</expected>
+            </step>
+            <step>
+              <index>16</index>
+              <content>Presionar &quot;Ingresar&quot;.</content>
+              <expected>La URL pasa a http://localhost:5173/login y el título a &quot;Inventory - Iniciar sesión&quot;.</expected>
+            </step>
+          </steps_separated>
+        </custom>
+      </case>
+    </cases>
+  </section>
+</sections>

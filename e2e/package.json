@@ -1,0 +1,15 @@
+{
+  "name": "inventory-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas E2E con Cypress para Inventory (login, inventario y catálogo público)",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "testrail:generar": "node testrail/generar.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^16.1.0"
+  }
+}

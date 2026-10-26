@@ -27,7 +27,10 @@ export default function ItemList({ onEdit, onRefresh }) {
     setStatuses(statRes.data);
   };
 
-  const loadItems = async () => {
+  // isCurrent descarta la respuesta si los filtros ya cambiaron: al escribir en
+  // la búsqueda, la respuesta de "L" podía llegar después de la de "LAPTOP" y
+  // dejar la tabla con resultados viejos.
+  const loadItems = async (isCurrent = () => true) => {
     setLoading(true);
     setError('');
     try {
@@ -37,16 +40,20 @@ export default function ItemList({ onEdit, onRefresh }) {
       if (filters.search.trim()) params.search = filters.search.trim();
 
       const res = await itemService.getAll(params);
-      setItems(res.data);
+      if (isCurrent()) setItems(res.data);
     } catch (err) {
-      setError('Error al cargar el inventario. ¿El backend está corriendo?');
+      if (isCurrent()) setError('Error al cargar el inventario. ¿El backend está corriendo?');
     } finally {
-      setLoading(false);
+      if (isCurrent()) setLoading(false);
     }
   };
 
   useEffect(() => { loadCatalogs(); }, []);
-  useEffect(() => { loadItems(); }, [filters]);
+  useEffect(() => {
+    let current = true;
+    loadItems(() => current);
+    return () => { current = false; };
+  }, [filters]);
 
   const handleDelete = async (id, name) => {
     if (!window.confirm(`¿Eliminar "${name}"?`)) return;

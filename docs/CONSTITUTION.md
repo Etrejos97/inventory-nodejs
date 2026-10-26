@@ -39,9 +39,9 @@ antes del primer commit de código. `ESTADO.md` en la raíz es el puntero
 - No toco el repo original (`inventory-fullstack`) para nada.
 - No hasheo passwords ni invento un sistema de auditoría real para
   `MovementHistory`.
-- No agrego tests, framework de testing ni CI hasta que se pida — este
-  proyecto es, a propósito, la base sobre la que voy a practicar testing
-  después. Ver `ESTADO.md`.
+- Los tests del backend y los unitarios del frontend quedan fuera. La única
+  automatización es la E2E con Cypress en `e2e/`, que armé para la práctica de
+  testing de la universidad. No hay CI todavía. Ver `ESTADO.md`.
 - No pagino ni versiono nada que el original tampoco lo haga.
 
 ---

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, ShoppingCart } from 'lucide-react';
 import { CartProvider, useCart } from './context/CartContext';
 import Home from './components/Home';
@@ -17,14 +18,42 @@ function getUserFromStorage() {
   }
 }
 
+// Cada vista tiene su propia URL y su propio título, para poder enlazarlas
+// y para que las pruebas E2E validen URL y título por página.
+const PATHS = {
+  home: '/',
+  login: '/login',
+  inventory: '/inventario',
+  admin: '/admin',
+};
+
+const TITLES = {
+  home: 'Inventory - Gestor de Inventario',
+  login: 'Inventory - Iniciar sesión',
+  inventory: 'Inventory - Inventario',
+  admin: 'Inventory - Administración',
+};
+
+function pageFromPath(pathname) {
+  const entry = Object.entries(PATHS).find(([, path]) => path === pathname);
+  return entry ? entry[0] : null;
+}
+
 function AppContent() {
   const [user, setUser] = useState(getUserFromStorage);
-  const [page, setPage] = useState('home');
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const page = pageFromPath(pathname);
+  const setPage = (name) => navigate(PATHS[name]);
   const [showForm, setShowForm] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
   const { totalItems } = useCart();
+
+  useEffect(() => {
+    if (page) document.title = TITLES[page];
+  }, [page]);
 
   const handleLogin = (u) => {
     localStorage.setItem('inventory_user', JSON.stringify(u));
@@ -35,7 +64,6 @@ function AppContent() {
   const handleLogout = () => {
     localStorage.removeItem('inventory_user');
     setUser(null);
-    setPage('home');
   };
 
   const handleSave = () => {
@@ -49,7 +77,17 @@ function AppContent() {
     setShowForm(true);
   };
 
+  if (!page) return <Navigate to={PATHS.home} replace />;
+  // Sin sesión, las rutas protegidas vuelven al catálogo. Al cerrar sesión este
+  // guard hace la navegación: un navigate('/') en el mismo handler llega después
+  // del render con user=null y la URL terminaba en /login.
   if (!user && (page === 'inventory' || page === 'admin')) {
+    return <Navigate to={PATHS.home} replace />;
+  }
+  if (user && (page === 'login' || page === 'home')) {
+    return <Navigate to={PATHS.inventory} replace />;
+  }
+  if (page === 'login') {
     return (
       <Login
         onLogin={handleLogin}
@@ -104,7 +142,7 @@ function AppContent() {
             <button
               className="btn btn-secondary"
               style={{ fontSize: '0.78rem', padding: '0.4rem 0.8rem' }}
-              onClick={() => setPage('inventory')}
+              onClick={() => setPage('login')}
             >
               Ingresar
             </button>

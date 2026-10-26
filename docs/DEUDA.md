@@ -33,13 +33,12 @@ blank ahí, solo en el `update`. Repliqué la discrepancia a propósito, no la
 
 **Ubicación**: `app/api/users/route.ts`.
 
-## Sin tests, sin CI — a propósito, por ahora
+## Tests: solo E2E con Cypress, sin CI
 
-Este proyecto es la base sobre la que voy a practicar testing. No armé
-framework de tests, smoke tests scripteados ni workflow de CI en esta
-primera vuelta — la verificación de que cada endpoint responde bien la hice
-a mano con `curl` mientras construía. Cuando arranque la práctica de
-testing, esta sección se actualiza o se borra.
+Armé 3 casos E2E con Cypress en `e2e/` (login, inventario y catálogo
+público). No hay tests unitarios ni de API del backend, y tampoco workflow
+de CI: los casos se corren a mano con el backend y el frontend levantados.
+La verificación de cada endpoint sigue siendo la que hice con `curl`.
 
 ## Vulnerabilidad conocida en una dependencia de desarrollo de Prisma
 

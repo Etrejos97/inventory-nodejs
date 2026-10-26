@@ -1,0 +1,162 @@
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        16.1.0                                                                         │
+  │ Browser:        Electron 146 (headless) (deprecated)                                           │
+  │ Node Version:   v22.23.1 (C:\Users\EdisonEsneiderTrejos\AppData\Local\Microsoft\WinGet\Package │
+  │                 s\OpenJS.NodeJS.22_Microsoft.Winget.Source_8wekyb3d8bbwe\node-v22.23.1-win-x64 │
+  │                 \node.exe)                                                                     │
+  │ Specs:          3 found (01-login.cy.js, 02-inventario.cy.js, 03-catalogo.cy.js)               │
+  │ Searched:       cypress/e2e/**/*.cy.js                                                         │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Warning: The Electron browser is deprecated as a test browser and will be removed in a future version of Cypress.
+
+Switch to Chrome or another installed browser to avoid a breaking change when you upgrade.
+
+Read more about supported browsers: https://on.cypress.io/launching-browsers
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Running:  01-login.cy.js                                                                  (1 of 3)
+
+  TC-AUTO-01 · Autenticación en /login (RF-07)
+    Paso  1: Abrir la página de inicio de sesión
+    Paso  2: Validar el título de la pestaña
+    Paso  3: Validar la URL de la página
+    Paso  4: Validar que los elementos de la pantalla están presentes
+    Paso  5: Validar los textos de la pantalla
+    Paso  6: Validar los estilos CSS (fuente, colores, fondos, bordes)
+    Paso  7: Enviar el formulario vacío: el navegador marca el usuario como obligatorio y no llama a la API
+    Paso  8: Escribir usuario y contraseña incorrecta y alternar la visibilidad de la contraseña
+    Paso  9: Enviar credenciales inválidas: la API responde 401 y se muestra el mensaje de error
+    Paso 10: Corregir la contraseña (clear + type) y enviar credenciales válidas
+    Paso 11: Validar la respuesta de la API: 200 con el rol del usuario
+    Paso 12: Validar que la URL cambia al inventario
+    Paso 13: Validar el título de la pantalla de inventario
+    Paso 14: Validar la barra superior con la sesión iniciada
+    Paso 15: Cerrar sesión y validar que se vuelve a la página pública
+    √ muestra el formulario, rechaza credenciales inválidas y abre el inventario con las válidas (9879ms)
+
+  1 passing (10s)
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     10 seconds                                                                       │
+  │ Spec Ran:     01-login.cy.js                                                                   │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  (Video)
+
+  -  Video output: C:\Dev\inventory-nodejs\e2e\cypress\videos\01-login.cy.js.mp4
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Running:  02-inventario.cy.js                                                             (2 of 3)
+
+  TC-AUTO-02 · Registro y consulta en /inventario (RF-01, RF-02)
+    Paso  1: Iniciar sesión como Administrador y abrir /inventario
+    Paso  2: Validar el título de la pestaña
+    Paso  3: Validar la URL de la página
+    Paso  4: Validar que los elementos de la pantalla están presentes
+    Paso  5: Validar los textos: tarjetas resumen, encabezados de la tabla y cantidad de filas
+    Paso  6: Validar los estilos CSS (color, fondo, mayúsculas, fuente)
+    Paso  7: Validar las opciones de los menús desplegables de categoría y estado
+    Paso  8: Seleccionar la categoría Hardware: solo quedan los 6 elementos de Hardware
+    Paso  9: Agregar el estado Disponible: los filtros se combinan y quedan 3 elementos
+    Paso 10: Quitar los filtros y buscar "laptop" y "LAPTOP": la búsqueda no distingue mayúsculas
+    Paso 11: Buscar un texto que no existe: se muestra el mensaje de lista vacía
+    Paso 12: Abrir el formulario "Nuevo elemento" y validar sus campos y listas desplegables
+    Paso 13: Enviar el formulario sin datos: el navegador marca el nombre y la categoría como obligatorios
+    Paso 14: Llenar todos los campos con un número de serie ya registrado: la API responde 409 y el formulario muestra el error
+    Paso 15: Corregir el número de serie y volver a enviar: la API responde 201 y el formulario se cierra
+    Paso 16: Buscar el elemento por su número de serie y validar los datos de la fila
+    Paso 17: Eliminar el elemento desde la fila (se acepta la confirmación) y validar que desaparece
+    √ consulta con filtros y búsqueda, y registra un elemento tras corregir un error del formulario (26260ms)
+
+  1 passing (27s)
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     26 seconds                                                                       │
+  │ Spec Ran:     02-inventario.cy.js                                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  (Video)
+
+  -  Video output: C:\Dev\inventory-nodejs\e2e\cypress\videos\02-inventario.cy.js.mp4
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Running:  03-catalogo.cy.js                                                               (3 of 3)
+
+  TC-AUTO-03 · Catálogo público en / (RF-02, cobertura adicional)
+    Paso  1: Abrir la página pública sin sesión iniciada
+    Paso  2: Validar el título de la pestaña
+    Paso  3: Validar la URL de la página
+    Paso  4: Validar que los elementos de la pantalla están presentes
+    Paso  5: Validar los textos del encabezado y de la franja de beneficios
+    Paso  6: Validar los estilos CSS (tamaño, peso, color, bordes redondeados)
+    Paso  7: Validar las pestañas de categoría (menú de filtro) y la cantidad de productos
+    Paso  8: Validar que cada producto muestra su imagen con texto alternativo
+    Paso  9: Elegir una categoría sin productos (Software): se muestra el mensaje de vacío
+    Paso 10: Elegir la categoría Redes: queda una sola tarjeta con los datos del producto
+    Paso 11: Agregar el producto al carrito: el contador de la barra superior pasa a 1
+    Paso 12: Abrir el carrito y validar su contenido
+    Paso 13: Subir la cantidad con el botón + y validar el nuevo total
+    Paso 14: Solicitar la cotización y validar el resumen antes de confirmar
+    Paso 15: Confirmar la cotización: aparece el mensaje de éxito y el carrito queda vacío
+    Paso 16: Pulsar Ingresar: la URL cambia a /login
+    √ muestra el catálogo, filtra por categoría y completa una solicitud de cotización (11470ms)
+
+  1 passing (12s)
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     11 seconds                                                                       │
+  │ Spec Ran:     03-catalogo.cy.js                                                                │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  (Video)
+
+  -  Video output: C:\Dev\inventory-nodejs\e2e\cypress\videos\03-catalogo.cy.js.mp4
+
+====================================================================================================
+
+  (Run Finished)
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  01-login.cy.js                           00:10        1        1        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  02-inventario.cy.js                      00:26        1        1        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  03-catalogo.cy.js                        00:11        1        1        -        -        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!                        00:49        3        3        -        -        -
